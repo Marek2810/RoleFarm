@@ -14,7 +14,7 @@ public class Harvest implements Listener {
 	@EventHandler
 	public void onBreak(BlockBreakEvent event) {
 		Player player = (Player) event.getPlayer();
-		player.sendMessage( event.getBlock().getType().toString() );
+		//player.sendMessage( event.getBlock().getType().toString() );
 		if (Main.inst.getConfig().getList("crops").toString()
 				.contains(event.getBlock().getType().toString())) {
 			player.sendMessage(ChatColor.GREEN + "yep");
