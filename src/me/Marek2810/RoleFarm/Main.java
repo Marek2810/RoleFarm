@@ -15,7 +15,7 @@ public class Main extends JavaPlugin implements Listener {
     	inst = this;
     	this.saveDefaultConfig();
     	harvest = new Harvest();
-    	this.getServer().getPluginManager().registerEvents(harvest, this);
+    	this.getServer().getPluginManager().registerEvents(harvest, this);   	
     }
 
     @Override
