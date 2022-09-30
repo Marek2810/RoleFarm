@@ -26,8 +26,8 @@ public class Watering implements Listener {
 			Player player = (Player) event.getPlayer();
 			ItemStack itemInMainHand = new ItemStack(event.getPlayer().getInventory().getItemInMainHand());
 			if ( itemInMainHand.getType().equals(Material.WATER_BUCKET) ) {
-				if ( Main.yamlNeedWatherList.contains(event.getClickedBlock().getType().toString()) ) {	
-					player.sendMessage(ChatColor.GOLD + "test");					
+				player.sendMessage(ChatColor.GOLD + "test");
+				if ( Main.yamlNeedWaterList.contains(event.getClickedBlock().getType().toString()) ) {	
 					Location loc = event.getClickedBlock().getLocation();
 					String check = loc.getWorld().getName() + ", " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ();
 					if ( Main.yamlWateredList == null ) {
