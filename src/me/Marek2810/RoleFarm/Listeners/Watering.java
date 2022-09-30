@@ -10,7 +10,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import me.Marek2810.RoleFarm.Main;
 import net.md_5.bungee.api.ChatColor;
@@ -20,32 +22,68 @@ public class Watering implements Listener {
 	@EventHandler
 	public void onClick (PlayerInteractEvent event) {
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			if ( event.getHand() == EquipmentSlot.OFF_HAND ) return;
 			Player player = (Player) event.getPlayer();
 			ItemStack itemInMainHand = new ItemStack(event.getPlayer().getInventory().getItemInMainHand());
-			ItemStack watter_bucket = new ItemStack(Material.WATER_BUCKET);
-			if ( itemInMainHand.equals(watter_bucket) ) {
-				if ( Main.inst.getConfig().getList("need_wather").contains(event.getClickedBlock().getType().toString()) ) {
-					event.setCancelled(true);
+			if ( itemInMainHand.getType().equals(Material.WATER_BUCKET) ) {
+				if ( Main.yamlNeedWatherList.contains(event.getClickedBlock().getType().toString()) ) {	
+					player.sendMessage(ChatColor.GOLD + "test");					
 					Location loc = event.getClickedBlock().getLocation();
 					String check = loc.getWorld().getName() + ", " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ();
-					List<String> list = Main.cropsData.getConfig().getStringList("crops.watered");
-					if ( list == null ) {
-						list = new ArrayList<String>();
-					}
-					if (list.contains(check)) {
-						player.sendMessage(ChatColor.AQUA + "Políčko už je zaliate.");
+					if ( Main.yamlWateredList == null ) {
+						Main.yamlWateredList = new ArrayList<String>();
+					}					
+					if (Main.yamlWateredList.contains(check)) {
+						String msg = Main.inst.getConfig().getString("messages.watered");
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));	
+						event.setCancelled(true);
 						return;
 					}
-					list.add(check);
-					Main.cropsData.getConfig().set("crops.watered", list);
-					Main.cropsData.saveConfig();
-					player.sendMessage(ChatColor.GREEN + "Zalial si políčko.");
-					return;	
-				}
-				else {
-					player.sendMessage(ChatColor.RED + "Nemôžeš rozlievať vodu.");
-					event.setCancelled(true);
-				}											
+					else {
+						ItemMeta meta = itemInMainHand.getItemMeta();
+						if ( !meta.hasLore() ) {
+							List<String> lore = new ArrayList<String>();						
+							lore.add(" ");
+							int newUsages = Main.waterBucketMaxUsages-1;
+							lore.add(ChatColor.AQUA + "Použitia: " + newUsages + "/" + Main.waterBucketMaxUsages);
+							player.getInventory().remove(itemInMainHand);
+							meta.setLore(lore);
+							itemInMainHand.setItemMeta(meta);						
+							player.getInventory().addItem(itemInMainHand);
+						}
+						else {
+							List<String> lore = meta.getLore();
+							String[] lore1 = lore.get(1).split("Použitia: ");
+							String[] loreSplit = lore1[1].split("/");
+							int usages = Integer.valueOf(loreSplit[0]);
+							if (usages > 1 ) {
+								player.getInventory().removeItem(itemInMainHand);
+								int newUsages = usages-1;
+								lore.set(1, ChatColor.AQUA + "Použitia: " + String.valueOf(newUsages) + "/" + Main.waterBucketMaxUsages);
+								meta.setLore(lore);
+								itemInMainHand.setItemMeta(meta);
+								player.getInventory().addItem(itemInMainHand);
+							}
+							else if (usages == 1) {
+								player.getInventory().removeItem(itemInMainHand);
+								ItemStack bucket = new ItemStack(Material.BUCKET);
+								player.getInventory().addItem(bucket);
+							}
+							else {
+								player.sendMessage(ChatColor.RED + "Error!");
+								event.setCancelled(true);
+								return;
+							}
+						}
+						Main.yamlWateredList.add(check);
+						Main.cropsData.getConfig().set("crops.watered", Main.yamlWateredList);
+						Main.cropsData.saveConfig();
+						String msg = Main.inst.getConfig().getString("messages.on-watering");
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));	
+						event.setCancelled(true);
+						return;
+					}						
+				}								
 			}
 		}
 	}

@@ -16,7 +16,10 @@ public class Main extends JavaPlugin implements Listener {
 	public static DataManager cropsData;
 	public static Harvest harvest;
 	public static Watering watering;	
-	public static List<String> ymlCrops;
+	public static List<String> yamlCropsList;
+	public static List<String> yamlNeedWatherList;
+	public static List<String> yamlWateredList;
+	public static int waterBucketMaxUsages;
     
     @Override
     public void onEnable() {
@@ -27,12 +30,19 @@ public class Main extends JavaPlugin implements Listener {
     	this.getServer().getPluginManager().registerEvents(harvest, this);  
     	watering = new Watering();
     	this.getServer().getPluginManager().registerEvents(watering, this);
+    	//Loading crops from config.yml
     	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading crops...");
-    	ymlCrops = this.getConfig().getStringList("crops");
+    	yamlCropsList = this.getConfig().getStringList("crops");
     	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Crops loaded.");
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading farming...");
-    	ymlCrops = this.getConfig().getStringList("farming");
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Farming loaded.");
+    	//Loading need wather from config.yml
+    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading need wather...");
+    	yamlNeedWatherList = this.getConfig().getStringList("need_wather");
+    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Need wather loaded.");
+    	//Loading watered from crops.yml
+    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading wathered...");
+    	yamlWateredList = cropsData.getConfig().getStringList("crop.watered");
+    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Wathered loaded.");
+    	waterBucketMaxUsages = this.getConfig().getInt("options.water-bucket-max-usages");
     }
 
     @Override
