@@ -1,7 +1,9 @@
 package me.Marek2810.RoleFarm;
 
 import java.util.List;
+import java.util.Set;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,7 +20,8 @@ public class Main extends JavaPlugin implements Listener {
 	public static Harvest harvest;
 	public static Watering watering;	
 	public static Fertilisation fertilisation;
-	public static List<String> yamlCropsList;
+	public static ConfigurationSection yamlCropsSection;
+	public static Set<String> yamlCrops;
 	public static List<String> yamlDropsList;
 	public static List<String> yamlNeedWaterList;
 	public static List<String> yamlNeedFertilizerList;
@@ -38,11 +41,12 @@ public class Main extends JavaPlugin implements Listener {
     	watering = new Watering();
     	this.getServer().getPluginManager().registerEvents(watering, this);
     	fertilisation = new Fertilisation();
-    	this.getServer().getPluginManager().registerEvents(fertilisation, this);
+    	this.getServer().getPluginManager().registerEvents(fertilisation, this);    	
     	//Loading crops from config.yml
     	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading crops...");
-    	yamlCropsList = this.getConfig().getStringList("crops");
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Crops loaded.");
+    	yamlCropsSection = this.getConfig().getConfigurationSection("crops");
+    	yamlCrops = yamlCropsSection.getKeys(false); 	
+    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading crops...");    	
     	//Loading drops from config.yml
     	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading drops...");
     	yamlDropsList = this.getConfig().getStringList("drops");

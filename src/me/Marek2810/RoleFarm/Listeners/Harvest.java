@@ -10,13 +10,59 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import me.Marek2810.RoleFarm.Main;
 import net.md_5.bungee.api.ChatColor;
 
 public class Harvest implements Listener {
+	
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent event) {
+		Player player = (Player) event.getPlayer();		
+		String blockType = event.getBlock().getType().toString();
+		ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
+		String badToolMsg = Main.inst.getConfig().getString("messages.harvest-bad-tool");
+		if ( Main.yamlCrops.contains(blockType) ) {
+			for (String yamlTool : Main.yamlCropsSection.getConfigurationSection(blockType + ".harvest-tools").getKeys(false) ) {
+				//Is tool correct?
+				if ( Main.yamlCropsSection.getString(blockType + ".harvest-tools." + yamlTool + ".type")
+						.equals(itemInMainHand.getType().toString()) ) {					
+					//Need custom model data?
+					if ( Main.yamlCropsSection.get(blockType + ".harvest-tools." + yamlTool + ".customModelData") != null ) {
+						player.sendMessage(ChatColor.AQUA + "custom model data");
+						ItemMeta meta = itemInMainHand.getItemMeta();
+						//Has custom model data?
+						if (meta.hasCustomModelData()) {
+							//Custom model data are correct?
+							if ( meta.getCustomModelData() != Main.yamlCropsSection.getInt(blockType + ".harvest-tools." + yamlTool + ".customModelData") ) {
+								player.sendMessage(ChatColor.translateAlternateColorCodes('&', badToolMsg));
+								event.setCancelled(true);
+								return;
+							}
+						}
+						//Not having custom model data
+						else {
+							player.sendMessage(ChatColor.translateAlternateColorCodes('&', badToolMsg));
+							event.setCancelled(true);
+							return;
+						}
+					}
+				}
+				//Bad tool
+				else {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('&', badToolMsg));
+					event.setCancelled(true);
+					return;
+				}
+			}
+		}
+		return;
+	}
+	
 	
 	@EventHandler
 	public void onBlockDrop(BlockDropItemEvent event) {

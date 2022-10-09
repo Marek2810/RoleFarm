@@ -5,20 +5,48 @@ options:
 
 fertilizer:
   material: COCOA_BEANS
+  customModelData: 2810301  
   
 messages:
   watered: "&bPolíčko už je zaliate."
   on-watering: "&aZalial si políčko."
   fertilized: "&bPolíčko už je pohnojené."
   on-fertilisation: "&aPohnojil si políčko."
+  harvest-bad-tool: "&cToto nepôjde."
 
 crops:
-  - WHEAT
-  - CARROTS
-  - POTATOES
-  - MELON
-  - PUMPKIN
-  - BEETROOTS
+  WHEAT:
+    harvest-tools:
+      stone-sword:
+        type: STONE_SWORD
+        customModelData: 2810301
+      iron-sword:
+        type: IRON_SWORD
+        customModelData: 2810302
+  CARROTS:
+    harvest-tools:
+     STONE_SHOWEL:
+        type: STONE_SHOWEL
+     IRON_SHOWEL:
+        type: IRON_SHOWEL
+  POTATOES:
+    harvest-tools:
+     STONE_SHOWEL:
+        type: STONE_SHOWEL
+     IRON_SHOWEL:
+        type: IRON_SHOWEL
+  MELON:
+    harvest-tools:
+      iron-sword:
+        type: IRON_SWORD
+  PUMPKIN:
+    harvest-tools:
+      iron-sword:
+        type: IRON_SWORD
+  BEETROOTS:
+    harvest-tools:
+      iron-sword:
+        type: IRON_SWORD
 
 drops:
   - WHEAT
