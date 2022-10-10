@@ -3,6 +3,7 @@ package me.Marek2810.RoleFarm;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -41,38 +42,39 @@ public class Main extends JavaPlugin implements Listener {
     	watering = new Watering();
     	this.getServer().getPluginManager().registerEvents(watering, this);
     	fertilisation = new Fertilisation();
-    	this.getServer().getPluginManager().registerEvents(fertilisation, this);    	
+    	this.getServer().getPluginManager().registerEvents(fertilisation, this);    
+    	ConsoleCommandSender console = this.getServer().getConsoleSender();
     	//Loading crops from config.yml
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading crops...");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading crops...");
     	yamlCropsSection = this.getConfig().getConfigurationSection("crops");
     	yamlCrops = yamlCropsSection.getKeys(false); 	
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading crops...");    	
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Crops loaded.");  	
     	//Loading drops from config.yml
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading drops...");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading drops...");
     	yamlDropsList = this.getConfig().getStringList("drops");
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Drops loaded.");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Drops loaded."); 	    	    	
     	//Loading need water from config.yml
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading need water...");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading need water...");
     	yamlNeedWaterList = this.getConfig().getStringList("need-water");
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Need water loaded.");    	
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Need water loaded.");     	
     	//Loading need fertilizer from config.yml
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading need fertilizer...");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading need fertilizer...");    	
     	yamlNeedFertilizerList = this.getConfig().getStringList("need-fertilizer");
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Need fertilizer loaded.");    	
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Need fertilizer loaded.");  	
     	//Loading watered from crops.yml
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading watered...");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading watered...");  
     	yamlWateredList = cropsData.getConfig().getStringList("crop.watered");
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Watered loaded.");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Watered loaded.");
     	//Loading fertilized from crops.yml
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading fertilized...");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading fertilized...");
     	yamlFertilizedList = cropsData.getConfig().getStringList("crop.fertilized");
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Fertilized loaded.");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Fertilized loaded.");
     	// Loading options variables   	
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading options variables...");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading options variables...");
     	waterBucketMaxUsages = this.getConfig().getInt("options.water-bucket-max-usages");   
     	wateringMulti = this.getConfig().getDouble("options.watering-multiplier");
     	fertilisationMulti = this.getConfig().getDouble("options.fertilisation-multiplier");
-    	this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Options variables loaded.");
+    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Options variables loaded.");
     }
 
     @Override

@@ -12,41 +12,63 @@ messages:
   on-watering: "&aZalial si políčko."
   fertilized: "&bPolíčko už je pohnojené."
   on-fertilisation: "&aPohnojil si políčko."
+  harvest: "&bZbieraš..."
   harvest-bad-tool: "&cToto nepôjde."
 
 crops:
   WHEAT:
+    harvest-time: 3
     harvest-tools:
-      stone-sword:
+      stone-scythe:
         type: STONE_SWORD
         customModelData: 2810301
-      iron-sword:
+      iron-scythe:
         type: IRON_SWORD
-        customModelData: 2810302
+      bone:
+        type: BONE
   CARROTS:
+    harvest-time: 3
     harvest-tools:
-     STONE_SHOWEL:
-        type: STONE_SHOWEL
-     IRON_SHOWEL:
-        type: IRON_SHOWEL
+      STONE_SHOVEL:
+        type: STONE_SHOVEL
+      IRON_SHOVEL:
+        type: IRON_SHOVEL
+      bone:
+        type: BONE
   POTATOES:
+    harvest-time: 3
     harvest-tools:
-     STONE_SHOWEL:
-        type: STONE_SHOWEL
-     IRON_SHOWEL:
-        type: IRON_SHOWEL
+      STONE_SHOVEL:
+        type: STONE_SHOVEL
+      IRON_SHOVEL:
+        type: IRON_SHOVEL
+      bone:
+        type: BONE
   MELON:
+    harvest-time: 3  
     harvest-tools:
-      iron-sword:
+      stone-scythe:
+        type: STONE_SWORD
+        customModelData: 2810301
+      iron-scythe:
         type: IRON_SWORD
+      bone:
+        type: BONE
   PUMPKIN:
+    harvest-time: 3 
     harvest-tools:
-      iron-sword:
+      stone-scythe:
+        type: STONE_SWORD
+        customModelData: 2810301
+      iron-scythe:
         type: IRON_SWORD
+      bone:
+        type: BONE
   BEETROOTS:
+    harvest-time: 3 
     harvest-tools:
-      iron-sword:
-        type: IRON_SWORD
+      bone:
+        type: BONE
 
 drops:
   - WHEAT
