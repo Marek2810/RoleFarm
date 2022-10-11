@@ -1,6 +1,7 @@
 package me.Marek2810.RoleFarm.Listeners;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -10,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -18,15 +18,21 @@ import me.Marek2810.RoleFarm.Main;
 import net.md_5.bungee.api.ChatColor;
 
 public class Watering implements Listener {
+
+	public static HashMap<Player, Long> wateringCD = new HashMap<Player, Long>();
 	
 	@EventHandler
 	public void onClick (PlayerInteractEvent event) {
-		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			if ( event.getHand() == EquipmentSlot.OFF_HAND ) return;
-			Player player = (Player) event.getPlayer();
-			ItemStack itemInMainHand = new ItemStack(event.getPlayer().getInventory().getItemInMainHand());
+		if ( event.getPlayer().getInventory().getItemInMainHand() == null ) return;
+		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {			
+			Player player = (Player) event.getPlayer();			
+			ItemStack itemInMainHand = new ItemStack(player.getInventory().getItemInMainHand());
 			if ( itemInMainHand.getType().equals(Material.WATER_BUCKET) ) {
-				player.sendMessage(ChatColor.GOLD + "test");
+				if (wateringCD.get(player) != null) {
+					event.setCancelled(true);
+					if (System.currentTimeMillis() <= wateringCD.get(player)) return;
+					if (System.currentTimeMillis() > wateringCD.get(player)) wateringCD.remove(player);
+				}	
 				if ( Main.yamlNeedWaterList.contains(event.getClickedBlock().getType().toString()) ) {	
 					Location loc = event.getClickedBlock().getLocation();
 					String check = loc.getWorld().getName() + ", " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ();
@@ -81,6 +87,7 @@ public class Watering implements Listener {
 						String msg = Main.inst.getConfig().getString("messages.on-watering");
 						player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));	
 						event.setCancelled(true);
+						wateringCD.put(player, System.currentTimeMillis()+30);
 						return;
 					}						
 				}								

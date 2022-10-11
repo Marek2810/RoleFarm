@@ -16,12 +16,14 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Fertilisation implements Listener {
 
+	
 	@EventHandler
 	public void onClick (PlayerInteractEvent event) {
 		if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+		if (event.getPlayer().getInventory().getItemInMainHand() == null) return;
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {				
-				Player player = (Player) event.getPlayer();
 				//je hnojivo
+				Player player = (Player) event.getPlayer();
 				if ( isFertilizer(player, event.getClickedBlock().getLocation() )) {
 					//pohnojiteľný blok
 					if (Main.yamlNeedFertilizerList.contains( event.getClickedBlock().getType().toString() )) {		
@@ -44,7 +46,7 @@ public class Fertilisation implements Listener {
 							player.getInventory().removeItem(itemInMainHand);
 							String msg = Main.inst.getConfig().getString("messages.on-fertilisation");
 							player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
-							event.setCancelled(true);
+							event.setCancelled(true);	
 							return;
 						}
 					}
