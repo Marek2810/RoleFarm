@@ -44,8 +44,8 @@ public class Fertilisation implements Listener {
 							Main.cropsData.saveConfig();	
 							itemInMainHand.setAmount(1);
 							player.getInventory().removeItem(itemInMainHand);
-							String msg = Main.inst.getConfig().getString("messages.on-fertilisation");
-							player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+							player.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+									Main.yamlMessages.getString("on-fertilisation")));
 							event.setCancelled(true);	
 							return;
 						}

@@ -40,8 +40,8 @@ public class Watering implements Listener {
 						Main.yamlWateredList = new ArrayList<String>();
 					}					
 					if (Main.yamlWateredList.contains(check)) {
-						String msg = Main.inst.getConfig().getString("messages.watered");
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));	
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+								Main.yamlMessages.getString("watered")));	
 						event.setCancelled(true);
 						return;
 					}
@@ -84,8 +84,8 @@ public class Watering implements Listener {
 						Main.yamlWateredList.add(check);
 						Main.cropsData.getConfig().set("crops.watered", Main.yamlWateredList);
 						Main.cropsData.saveConfig();
-						String msg = Main.inst.getConfig().getString("messages.on-watering");
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));	
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+								Main.yamlMessages.getString("on-watering")));	
 						event.setCancelled(true);
 						wateringCD.put(player, System.currentTimeMillis()+30);
 						return;
