@@ -4,9 +4,10 @@ options:
   water-bucket-max-usages: 4
 
 fertilizer:
-  material: COCOA_BEANS
-  customModelData: 2810301  
-  
+  basic:
+    material: COCOA_BEANS
+    # customModelData: 2810401
+      
 messages:
   watered: "&bPolíčko už je zaliate."
   on-watering: "&aZalial si políčko."
@@ -22,10 +23,6 @@ crops:
       stone-scythe:
         type: STONE_SWORD
         customModelData: 2810301
-      iron-scythe:
-        type: IRON_SWORD
-      bone:
-        type: BONE
   CARROTS:
     harvest-time: 3
     harvest-tools:
@@ -33,8 +30,6 @@ crops:
         type: STONE_SHOVEL
       IRON_SHOVEL:
         type: IRON_SHOVEL
-      bone:
-        type: BONE
   POTATOES:
     harvest-time: 3
     harvest-tools:

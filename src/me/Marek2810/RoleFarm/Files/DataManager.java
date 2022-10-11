@@ -12,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import me.Marek2810.RoleFarm.Main;
 
 public class DataManager {
+	
 	private Main plugin;
 	private FileConfiguration dataConfig = null;
 	private File configFile = null;
