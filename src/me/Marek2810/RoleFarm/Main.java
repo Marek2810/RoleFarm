@@ -41,6 +41,8 @@ public class Main extends JavaPlugin implements Listener {
 	//crops.yml
 	public static List<String> yamlWateredList;
 	public static List<String> yamlFertilizedList;
+	public static ConsoleCommandSender console;
+	public static String logPrefix;
     
     @Override
     public void onEnable() {
@@ -54,52 +56,51 @@ public class Main extends JavaPlugin implements Listener {
     	fertilisation = new Fertilisation();
     	this.getServer().getPluginManager().registerEvents(fertilisation, this);    
     	//Console
-    	ConsoleCommandSender console = this.getServer().getConsoleSender();
+    	console = this.getServer().getConsoleSender();
+    	 logPrefix = "&7[&6RoleFarm&7] ";
     
     	//Loading fertilizer from config.yml
     	yamlFertilizersSection = inst.getConfig().getConfigurationSection("fertilizer");
     	yamlFertilizers = yamlFertilizersSection.getKeys(false);
     	
     	//Loading crops from config.yml
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading crops...");
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eLoading crops..."));
+    	//console.sendMessage(ChatColor.BLUE + "[RoleFarm] " + ChatColor.YELLOW + "Loading crops...");
     	yamlCropsSection = inst.getConfig().getConfigurationSection("crops");
     	yamlCrops = yamlCropsSection.getKeys(false);
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Crops loaded.");  	
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aCrops loaded."));
+    	//console.sendMessage(ChatColor.BLUE + "[RoleFarm] " + ChatColor.GREEN + "Crops loaded.");  	
     	//Loading drops from config.yml
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading drops...");
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eLoading drops..."));
     	yamlDropsList = this.getConfig().getStringList("drops");
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Drops loaded."); 	    	    	
-    	//Loading fertilizer from config.yml
-    		//console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading fertilizer...");
-    		//yamlFertilizersSection = this.getConfig().getConfigurationSection("fertilizer");
-    		//yamlFertilizers = yamlFertilizersSection.getKeys(false);
-    		//sconsole.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Fertilizer loaded.");  	
-    	//Loading need water from config.yml
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading need water...");
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aDrops loaded."));
+
+    	//Loading need water from config.yml    	
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eLoading need water..."));
     	yamlNeedWaterList = this.getConfig().getStringList("need-water");
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Need water loaded.");     	
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aNeed water loaded."));
     	//Loading need fertilizer from config.yml
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading need fertilizer...");    	
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eLoading need fertilizer..."));
     	yamlNeedFertilizerList = this.getConfig().getStringList("need-fertilizer");
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Need fertilizer loaded.");  	
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aNeed fertilizer loaded."));
     	//Loading watered from crops.yml
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading watered...");  
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eLoading watered..."));
     	yamlWateredList = cropsData.getConfig().getStringList("crops.watered");
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Watered loaded.");
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aWatered loaded."));
     	//Loading fertilized from crops.yml
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading fertilized...");
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eLoading fertilized..."));
     	yamlFertilizedList = cropsData.getConfig().getStringList("crops.fertilized");
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Fertilized loaded.");
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aFertilized loaded."));
     	// Loading options variables   	
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading options variables...");
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eLoading options variables..."));
     	waterBucketMaxUsages = this.getConfig().getInt("options.water-bucket-max-usages");   
     	wateringMulti = this.getConfig().getDouble("options.watering-multiplier");
     	fertilisationMulti = this.getConfig().getDouble("options.fertilisation-multiplier");
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Options variables loaded.");
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aOptions variables loaded."));
     	// Loading messages
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.YELLOW + "Loading messages...");
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eoading messages..."));
     	yamlMessages = this.getConfig().getConfigurationSection("messages");
-    	console.sendMessage(ChatColor.AQUA + "[RoleFarm] " + ChatColor.GREEN + "Messages loaded.");  
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aMessages loaded."));
     }
 
     @Override

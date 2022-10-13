@@ -153,7 +153,9 @@ public class Harvest implements Listener {
 				Main.yamlFertilizedList.remove(check);
 				Main.cropsData.getConfig().set("crops.fertilized", Main.yamlFertilizedList);
 				Main.cropsData.saveConfig();
-			}			
+			}
+			Main.console.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+					Main.logPrefix + "&aHráč&6 " + player.getName() + " &apozbieral políčko na súradniciach &6" + check + "&a."));
 			dropItem.setAmount((int)newDropAmount);
 			world.dropItemNaturally(loc, dropItem);
 			secondItem.setAmount(secondMatAmount);

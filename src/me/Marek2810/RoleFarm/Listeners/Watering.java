@@ -77,6 +77,8 @@ public class Watering implements Listener {
 							}
 							else {
 								player.sendMessage(ChatColor.RED + "Error!");
+								Main.console.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+										Main.logPrefix + "&cZobrazená chyba hráčovi &6" + player + " &c na súradniciach &6" + check +"&c."));
 								event.setCancelled(true);
 								return;
 							}
@@ -86,6 +88,8 @@ public class Watering implements Listener {
 						Main.cropsData.saveConfig();
 						player.sendMessage(ChatColor.translateAlternateColorCodes('&',
 								Main.yamlMessages.getString("on-watering")));	
+						Main.console.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+								Main.logPrefix + "&aHráč&6 " + player.getName() + " &azalial políčko na súradniciach &6" + check + "&a."));
 						event.setCancelled(true);
 						wateringCD.put(player, System.currentTimeMillis()+30);
 						return;

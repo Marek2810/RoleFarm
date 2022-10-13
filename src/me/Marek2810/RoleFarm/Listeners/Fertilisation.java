@@ -46,6 +46,8 @@ public class Fertilisation implements Listener {
 							player.getInventory().removeItem(itemInMainHand);
 							player.sendMessage(ChatColor.translateAlternateColorCodes('&', 
 									Main.yamlMessages.getString("on-fertilisation")));
+							Main.console.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+									Main.logPrefix + "&aHráč&6 " + player.getName() + " &apohnojil políčko na súradniciach &6" + check + "&a."));
 							event.setCancelled(true);	
 							return;
 						}
