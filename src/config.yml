@@ -18,20 +18,20 @@ messages:
 
 crops:
   WHEAT:
-    harvest-time: 3
+    harvest-time: 1.5
     harvest-tools:
       stone-scythe:
         type: STONE_SWORD
         # customModelData: 2810301
   CARROTS:
-    harvest-time: 3
+    harvest-time: 1.5
     harvest-tools:
       STONE_SHOVEL:
         type: STONE_SHOVEL
       IRON_SHOVEL:
         type: IRON_SHOVEL
   POTATOES:
-    harvest-time: 3
+    harvest-time: 1.5
     harvest-tools:
       STONE_SHOVEL:
         type: STONE_SHOVEL
@@ -40,7 +40,7 @@ crops:
       bone:
         type: BONE
   MELON:
-    harvest-time: 3  
+    harvest-time: 1.5
     harvest-tools:
       stone-scythe:
         type: STONE_SWORD
@@ -50,7 +50,7 @@ crops:
       bone:
         type: BONE
   PUMPKIN:
-    harvest-time: 3 
+    harvest-time: 1.5
     harvest-tools:
       stone-scythe:
         type: STONE_SWORD
@@ -60,7 +60,7 @@ crops:
       bone:
         type: BONE
   BEETROOTS:
-    harvest-time: 3 
+    harvest-time: 1.5
     harvest-tools:
       bone:
         type: BONE

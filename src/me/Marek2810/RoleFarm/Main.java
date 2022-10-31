@@ -57,7 +57,7 @@ public class Main extends JavaPlugin implements Listener {
     	this.getServer().getPluginManager().registerEvents(fertilisation, this);    
     	//Console
     	console = this.getServer().getConsoleSender();
-    	 logPrefix = "&7[&6RoleFarm&7] ";
+    	logPrefix = "&7[&6RoleFarm&7] ";
     
     	//Loading fertilizer from config.yml
     	yamlFertilizersSection = inst.getConfig().getConfigurationSection("fertilizer");
