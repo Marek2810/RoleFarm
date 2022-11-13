@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.Marek2810.RoleFarm.Files.DataManager;
 import me.Marek2810.RoleFarm.Listeners.Fertilisation;
 import me.Marek2810.RoleFarm.Listeners.Harvest;
+import me.Marek2810.RoleFarm.Listeners.Planting;
 import me.Marek2810.RoleFarm.Listeners.Watering;
 import net.md_5.bungee.api.ChatColor;
 
@@ -21,6 +22,7 @@ public class Main extends JavaPlugin implements Listener {
 	public static Harvest harvest;
 	public static Watering watering;	
 	public static Fertilisation fertilisation;
+	public static Planting planting;
 	//config.yml Crops
 	public static ConfigurationSection yamlCropsSection;
 	public static Set<String> yamlCrops;
@@ -29,6 +31,8 @@ public class Main extends JavaPlugin implements Listener {
 	public static Set<String> yamlFertilizers;
 	//config.yaml Drops
 	public static List<String> yamlDropsList;
+	//config.yaml Plants
+	public static List<String> yamlPlantsList;
 	//config.yml Need Water/Fertilizer
 	public static List<String> yamlNeedWaterList;
 	public static List<String> yamlNeedFertilizerList;
@@ -36,6 +40,7 @@ public class Main extends JavaPlugin implements Listener {
 	public static int waterBucketMaxUsages;
 	public static double wateringMulti;
 	public static double fertilisationMulti;
+	public static double plantingtTime;
 	//config.yml messages
 	public static ConfigurationSection yamlMessages;
 	//crops.yml
@@ -55,6 +60,8 @@ public class Main extends JavaPlugin implements Listener {
     	this.getServer().getPluginManager().registerEvents(watering, this);
     	fertilisation = new Fertilisation();
     	this.getServer().getPluginManager().registerEvents(fertilisation, this);    
+    	planting = new Planting();
+    	this.getServer().getPluginManager().registerEvents(planting, this);
     	//Console
     	console = this.getServer().getConsoleSender();
     	logPrefix = "&7[&6RoleFarm&7] ";
@@ -74,6 +81,12 @@ public class Main extends JavaPlugin implements Listener {
     	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eLoading drops..."));
     	yamlDropsList = this.getConfig().getStringList("drops");
     	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aDrops loaded."));
+    	
+    	
+    	//Loading plants from config.yml
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eLoading plants..."));
+    	yamlPlantsList = this.getConfig().getStringList("plants");
+    	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aPlants loaded."));
 
     	//Loading need water from config.yml    	
     	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eLoading need water..."));
@@ -96,6 +109,7 @@ public class Main extends JavaPlugin implements Listener {
     	waterBucketMaxUsages = this.getConfig().getInt("options.water-bucket-max-usages");   
     	wateringMulti = this.getConfig().getDouble("options.watering-multiplier");
     	fertilisationMulti = this.getConfig().getDouble("options.fertilisation-multiplier");
+    	plantingtTime = this.getConfig().getDouble("options.plating-time");
     	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&aOptions variables loaded."));
     	// Loading messages
     	console.sendMessage(ChatColor.translateAlternateColorCodes('&', logPrefix + "&eoading messages..."));
