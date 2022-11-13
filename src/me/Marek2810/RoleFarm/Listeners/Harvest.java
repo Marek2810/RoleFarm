@@ -20,8 +20,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.google.common.base.Strings;
+
 import me.Marek2810.RoleFarm.Main;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class Harvest implements Listener {
 	
@@ -38,29 +42,64 @@ public class Harvest implements Listener {
 		if (Main.yamlCrops == null) return;
 		if (Main.yamlCrops.contains(blockType) ) {				
 			if ( isCorrectTool(player, blockType ) ) {
-				//good tool
-				//freez player
-				double harvestTime = Main.yamlCropsSection.getDouble(blockType + ".harvest-time")*20;
+				double harvestTime = Main.yamlCropsSection.getDouble(blockType + ".harvest-time")*1000;
+				long doneAt = (long)(System.currentTimeMillis()+harvestTime);				
 				frozenPlayer.add(player);
-				player.sendMessage( ChatColor.translateAlternateColorCodes('&',
-						Main.inst.getConfig().getString("messages.harvest") ));
-				new BukkitRunnable() {
+				new BukkitRunnable() {		
+					boolean done = false;
+					double percentage;
+					int left;
 					public void run() {
-						frozenPlayer.remove(player);					
-						cancel();
+						if (done) return;						
+						left = (int) (doneAt-System.currentTimeMillis());	
+						if (left < 0 ) left = 0;
+						percentage = (harvestTime-left)/harvestTime*100;
+						player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+								new TextComponent("§e§lZBIERANIE: §8[§r" + getProgressBar((int)percentage, 100, 20, "|", ChatColor.GREEN, ChatColor.RED) + "§8]"));
+						//player.sendMessage("§e§lZBIERANIE: §8[§r" + getProgressBar((int)percentage, 100, 20, "|", ChatColor.GREEN, ChatColor.RED) + "§8]");
+						if ( System.currentTimeMillis() >= doneAt ) {
+							done = true;
+							frozenPlayer.remove(player);	
+							cancel();
+						}
 					}
-				}.runTaskLater(Main.getPlugin(Main.class), (int)harvestTime);
+				}.runTaskTimer(Main.getPlugin(Main.class), 0, 1);
+				
+//				//good tool
+//				//freez player
+//				
+//				frozenPlayer.add(player);
+//				player.sendMessage( ChatColor.translateAlternateColorCodes('&',
+//						Main.inst.getConfig().getString("messages.harvest") ));
+//				new BukkitRunnable() {
+//					public void run() {
+//						frozenPlayer.remove(player);	
+//						player.sendMessage("§e§lYOUR PROGRESS: §8[§r" + getProgressBar(20, 100, 40, "|", ChatColor.GREEN, ChatColor.RED) + "§8]");
+//						cancel();
+//					}
+//				}.runTaskLater(Main.getPlugin(Main.class), (int)harvestTime);
 			}
 			else {
 				//bad tool
 				player.sendMessage( ChatColor.translateAlternateColorCodes('&',
 						Main.inst.getConfig().getString("messages.harvest-bad-tool")) );
 				event.setCancelled(true);
+                
+
 				return;
 			}
 		}
 		return;
 	}
+	
+	public String getProgressBar(int current, int max, int totalBars, String symbol, ChatColor completedColor,
+            ChatColor notCompletedColor) {
+        float percent = (float) current / max;
+        int progressBars = (int) (totalBars * percent);
+
+        return Strings.repeat("" + completedColor + symbol, progressBars)
+                + Strings.repeat("" + notCompletedColor + symbol, totalBars - progressBars);
+    }
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
