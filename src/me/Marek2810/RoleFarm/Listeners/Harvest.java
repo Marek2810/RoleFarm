@@ -55,7 +55,7 @@ public class Harvest implements Listener {
 						if (left < 0 ) left = 0;
 						percentage = (harvestTime-left)/harvestTime*100;
 						player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-								new TextComponent("§e§lZBIERANIE: §8[§r" + getProgressBar((int)percentage, 100, 20, "|", ChatColor.GREEN, ChatColor.RED) + "§8]"));
+								new TextComponent("§e§lZBIERANIE: §8[§r" + getProgressBar((int)percentage, 100, 40, "|", ChatColor.GREEN, ChatColor.RED) + "§8]"));
 						//player.sendMessage("§e§lZBIERANIE: §8[§r" + getProgressBar((int)percentage, 100, 20, "|", ChatColor.GREEN, ChatColor.RED) + "§8]");
 						if ( System.currentTimeMillis() >= doneAt ) {
 							done = true;
